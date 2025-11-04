@@ -1,0 +1,186 @@
+/* Variabel Global (Anda mungkin perlu menambahkannya jika belum ada) */
+:root {
+    --white: #ffffff;
+    --primary-red: #C62828; /* Asumsi dari warna merah Telkom */
+    --dark-red: #B71C1C;
+    --accent-red: #D32F2F;
+    --dark-gray: #333333;
+    --gray: #666666;
+    --border-gray: #e0e0e0;
+    --radius-xl: 16px;
+    --radius-md: 8px;
+}
+
+/* Container Utama */
+.login-container,
+.register-container {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 40px rgba(198, 40, 40, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    margin: 1rem;
+}
+
+.login-container {
+    max-width: 400px;
+}
+
+.register-container {
+    max-width: 500px;
+}
+
+.login-container::before,
+.register-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-red), var(--accent-red), var(--primary-red));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+/* Header Logo & Judul */
+.logo-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo-section i {
+    font-size: 3rem;
+    color: var(--primary-red);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 8px rgba(198, 40, 40, 0.3);
+}
+
+.login-container h2,
+.register-container h2 {
+    text-align: center;
+    color: var(--primary-red);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-shadow: 0 2px 4px rgba(198, 40, 40, 0.1);
+}
+
+/* Grup Form */
+.form-group {
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--white);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.2);
+}
+
+/* Baris Form (Khusus Register) */
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Tombol */
+.btn-login,
+.btn-register {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-red) 100%);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(198, 40, 40, 0.3);
+}
+
+.btn-login:hover,
+.btn-register:hover {
+    background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(198, 40, 40, 0.4);
+}
+
+/* Link Bawah */
+.register-link,
+.login-link {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.register-link a,
+.login-link a {
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.register-link a:hover,
+.login-link a:hover {
+    text-decoration: underline;
+    color: var(--dark-red);
+}
+
+/* Info Tambahan */
+.role-info {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+/* Notifikasi Error */
+.message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+}
+.message-error {
+    background: #FFEBEE;
+    color: #C62828;
+    border-left: 4px solid var(--primary-red);
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .login-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .register-container {
+        padding: 1.5rem;
+    }
+}
