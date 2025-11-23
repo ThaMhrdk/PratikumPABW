@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/pendaftaran",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Pendaftaran\\": "app/",
+            "Modules\\Pendaftaran\\Database\\Factories\\": "database/factories/",
+            "Modules\\Pendaftaran\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Pendaftaran\\Tests\\": "tests/"
+        }
+    }
+}
