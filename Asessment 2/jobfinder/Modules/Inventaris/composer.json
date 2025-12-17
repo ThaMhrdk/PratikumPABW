@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/inventaris",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Inventaris\\": "app/",
+            "Modules\\Inventaris\\Database\\Factories\\": "database/factories/",
+            "Modules\\Inventaris\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Inventaris\\Tests\\": "tests/"
+        }
+    }
+}

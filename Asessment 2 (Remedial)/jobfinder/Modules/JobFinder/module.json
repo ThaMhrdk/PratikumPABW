@@ -1,0 +1,11 @@
+{
+    "name": "JobFinder",
+    "alias": "jobfinder",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\JobFinder\\Providers\\JobFinderServiceProvider"
+    ],
+    "files": []
+}

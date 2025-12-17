@@ -1,0 +1,11 @@
+{
+    "name": "JobFinder",
+    "alias": "jobfinder",
+    "description": "Portal Lowongan Kerja Kabupaten Bandung",
+    "keywords": ["lowongan", "kerja", "jobfinder", "bandung"],
+    "priority": 0,
+    "providers": [
+        "Modules\\JobFinder\\App\\Providers\\JobFinderServiceProvider"
+    ],
+    "files": []
+}

@@ -1,0 +1,26 @@
+{
+    "name": "modules/jobfinder",
+    "description": "Portal Lowongan Kerja Kabupaten Bandung",
+    "authors": [
+        {
+            "name": "JobFinder Dev",
+            "email": "dev@jobfinder.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\JobFinder\\App\\Providers\\JobFinderServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\JobFinder\\": "src/",
+            "Modules\\JobFinder\\App\\": "app/",
+            "Modules\\JobFinder\\Database\\Factories\\": "database/factories/",
+            "Modules\\JobFinder\\Database\\Seeders\\": "database/seeders/"
+        }
+    }
+}

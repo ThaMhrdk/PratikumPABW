@@ -1,0 +1,995 @@
+================================================================================
+KUTKATHA - DOKUMENTASI SISTEM
+Platform Layanan Psikologi Digital Kutai Kartanegara
+================================================================================
+
+
+1. ACTIVITY DIAGRAM
+================================================================================
+
+1.1 ACTIVITY DIAGRAM: USER MELAKUKAN BOOKING KONSULTASI
+================================================================================
+
+START
+  |
+  v
+[User Login]
+  |
+  v
+{Berhasil?} --NO--> [Tampilkan Error]
+  |                        |
+  YES                      v
+  |                    [Kembali ke Login]
+  |                        |
+  |<-----------------------
+  |
+  v
+[Lihat Daftar Psikolog]
+  |
+  v
+[Filter Psikolog] (Spesialisasi, Lokasi, Rating)
+  |
+  v
+[Pilih Psikolog]
+  |
+  v
+[Lihat Jadwal Tersedia]
+  |
+  v
+{Ada Jadwal?} --NO--> [Tampilkan "Jadwal Penuh"]
+  |                           |
+  YES                         v
+  |                       [Kembali ke Daftar Psikolog]
+  |                           |
+  |<--------------------------
+  |
+  v
+[Pilih Jadwal & Isi Keluhan]
+  |
+  v
+[Buat Booking]
+  |
+  v
+[Sistem Generate Booking Code]
+  |
+  v
+[Proses Pembayaran]
+  |
+  v
+{Metode Pembayaran} --> [Transfer/E-Wallet/Tunai]
+  |
+  v
+[Upload Bukti Pembayaran]
+  |
+  v
+{Verifikasi Pembayaran} --FAILED--> [Transaksi Gagal]
+  |                                      |
+  SUCCESS                                v
+  |                              [Tampilkan Error]
+  |                                      |
+  |<------------------------------------|
+  |
+  v
+[Booking Confirmed]
+  |
+  v
+[Kirim Notifikasi ke Psikolog]
+  |
+  v
+[Tampilkan Booking Detail]
+  |
+  v
+END
+
+
+1.2 ACTIVITY DIAGRAM: PSIKOLOG MELAKUKAN KONSULTASI
+================================================================================
+
+START
+  |
+  v
+[Psikolog Login]
+  |
+  v
+{Berhasil?} --NO--> [Tampilkan Error]
+  |                      |
+  YES                    v
+  |                  [Kembali ke Login]
+  |                      |
+  |<---------------------
+  |
+  v
+[Lihat Dashboard]
+  |
+  v
+[View Booking Pending]
+  |
+  v
+{Ada Booking?} --NO--> [Tidak Ada Konsultasi]
+  |                          |
+  YES                        v
+  |                      END
+  |
+  v
+[Pilih Booking untuk Dikonfirmasi]
+  |
+  v
+[Konfirmasi Booking]
+  |
+  v
+[Tunggu Waktu Konsultasi]
+  |
+  v
+[Saat Jadwal: Mulai Konsultasi]
+  |
+  v
+[Chat/Video Call dengan User]
+  |
+  v
+[Input Catatan Konsultasi]
+  |
+  v
+[Input Diagnosis & Rekomendasi]
+  |
+  v
+[Set Jadwal Follow-up (jika perlu)]
+  |
+  v
+[Selesaikan Konsultasi]
+  |
+  v
+[Tampilkan Feedback Form untuk User]
+  |
+  v
+END
+
+
+1.3 ACTIVITY DIAGRAM: ADMIN MEMVERIFIKASI PSIKOLOG
+================================================================================
+
+START
+  |
+  v
+[Admin Login]
+  |
+  v
+[Akses Dashboard Admin]
+  |
+  v
+[View Pending Psikolog Applications]
+  |
+  v
+{Ada Pending?} --NO--> [Tidak Ada Aplikasi]
+  |                         |
+  YES                       v
+  |                     END
+  |
+  v
+[Pilih Aplikasi Psikolog]
+  |
+  v
+[Review Data Psikolog]
+  |  - Identitas
+  |  - STR/Kredensial
+  |  - Sertifikat
+  |  - Riwayat Pendidikan
+  |
+  v
+[Cek Dokumen Valid?]
+  |
+  +-- TIDAK VALID --> [Reject Aplikasi]
+  |                       |
+  |                       v
+  |                  [Kirim Notif Penolakan]
+  |                       |
+  |                       v
+  |                  END
+  |
+  +-- VALID --> [Approve Aplikasi]
+                     |
+                     v
+                [Update Status: VERIFIED]
+                     |
+                     v
+                [Psikolog Bisa Aktif]
+                     |
+                     v
+                [Kirim Email Verifikasi]
+                     |
+                     v
+                END
+
+
+1.4 ACTIVITY DIAGRAM: PEMERINTAH MEMBUAT LAPORAN
+================================================================================
+
+START
+  |
+  v
+[Pemerintah Login]
+  |
+  v
+[Akses Dashboard Pemerintah]
+  |
+  v
+[Pilih Menu Reports]
+  |
+  v
+[Input Periode Laporan] (Mulai - Selesai)
+  |
+  v
+[Pilih Tipe Laporan]
+  |  - Monthly (Bulanan)
+  |  - Quarterly (Triwulan)
+  |  - Annual (Tahunan)
+  |
+  v
+[Sistem Generate Data]
+  |  - Total Konsultasi
+  |  - Total User
+  |  - Total Psikolog
+  |  - Statistik Detail
+  |
+  v
+[Preview Laporan]
+  |
+  v
+[Edit Summary (Optional)]
+  |
+  v
+{Setuju?} --NO--> [Edit Lagi]
+  |               |
+  YES             |
+  |<--------------
+  |
+  v
+[Simpan Laporan]
+  |
+  v
+[Download PDF/Excel]
+  |
+  v
+[Send Report]
+  |
+  v
+[Laporan Dikirim ke Instansi]
+  |
+  v
+END
+
+
+1.5 ACTIVITY DIAGRAM: USER POSTING DI FORUM
+================================================================================
+
+START
+  |
+  v
+[User Login]
+  |
+  v
+[Akses Forum]
+  |
+  v
+[Lihat Daftar Topik]
+  |
+  v
+{Buat Topik Baru?} --YA--> [Input Judul & Kategori]
+  |                                |
+  TIDAK                            v
+  |                          [Input Deskripsi Masalah]
+  |                                |
+  |                                v
+  |                          [Pilih: Anonim/Identitas]
+  |                                |
+  |                                v
+  |                          [Create Topic]
+  |                                |
+  |                                v
+  |<------ [Notif ke Psikolog] ----
+  |
+  v
+[Lihat Topik yang Ada]
+  |
+  v
+[Pilih Topik untuk Dibaca]
+  |
+  v
+[Lihat Postingan & Komentar]
+  |
+  v
+{Ingin Komentar?} --NO--> [End]
+  |
+  YES
+  |
+  v
+[Tulis Komentar]
+  |
+  v
+[Preview Komentar]
+  |
+  v
+[Post Komentar]
+  |
+  v
+[Notifikasi ke Author Postingan]
+  |
+  v
+[Tampilkan Komentar]
+  |
+  v
+END
+
+
+================================================================================
+2. MVC ARCHITECTURE DIAGRAM
+================================================================================
+
+KUTKATHA MVC ARCHITECTURE
+
+┌────────────────────────────────────────────────────────────────┐
+│                          VIEW LAYER                             │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐  │
+│  │  Welcome Pages  │  │  Auth Templates │  │  User Pages  │  │
+│  └─────────────────┘  └─────────────────┘  └──────────────┘  │
+│         |                    |                     |            │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐  │
+│  │  Dashboard      │  │  Booking Pages  │  │  Forum Pages │  │
+│  └─────────────────┘  └─────────────────┘  └──────────────┘  │
+│         |                    |                     |            │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐  │
+│  │  Admin Panel    │  │  Psikolog Pages │  │ Articles     │  │
+│  └─────────────────┘  └─────────────────┘  └──────────────┘  │
+│         |                    |                     |            │
+│                    (Blade Templates)                            │
+│                    (Bootstrap 5 CSS)                            │
+│                    (Alpine.js Interactive)                      │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+                              ↓ HTTP
+┌────────────────────────────────────────────────────────────────┐
+│                      CONTROLLER LAYER                           │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌──────────────────────┐  ┌──────────────────────┐            │
+│  │ AuthController       │  │ UserController       │            │
+│  │ - login()            │  │ - index()            │            │
+│  │ - logout()           │  │ - show()             │            │
+│  │ - register()         │  │ - profile()          │            │
+│  └──────────────────────┘  └──────────────────────┘            │
+│                                                                 │
+│  ┌──────────────────────┐  ┌──────────────────────┐            │
+│  │ BookingController    │  │ PsikologController   │            │
+│  │ - index()            │  │ - index()            │            │
+│  │ - create()           │  │ - show()             │            │
+│  │ - store()            │  │ - verify()           │            │
+│  │ - cancel()           │  │ - updateProfile()    │            │
+│  └──────────────────────┘  └──────────────────────┘            │
+│                                                                 │
+│  ┌──────────────────────┐  ┌──────────────────────┐            │
+│  │ ForumController      │  │ ArticleController    │            │
+│  │ - index()            │  │ - index()            │            │
+│  │ - createTopic()      │  │ - show()             │            │
+│  │ - storeTopic()       │  │ - publish()          │            │
+│  │ - postComment()      │  │ - draft()            │            │
+│  └──────────────────────┘  └──────────────────────┘            │
+│                                                                 │
+│  ┌──────────────────────┐  ┌──────────────────────┐            │
+│  │ AdminController      │  │ PaymentController    │            │
+│  │ - dashboard()        │  │ - process()          │            │
+│  │ - verifyPsikolog()   │  │ - verify()           │            │
+│  │ - rejectPsikolog()   │  │ - history()          │            │
+│  └──────────────────────┘  └──────────────────────┘            │
+│                                                                 │
+│  ┌──────────────────────────────────────────────┐              │
+│  │ ReportController                             │              │
+│  │ - index()                                    │              │
+│  │ - generate()                                 │              │
+│  │ - export()                                   │              │
+│  └──────────────────────────────────────────────┘              │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+                    ↓ Query & Data Processing
+┌────────────────────────────────────────────────────────────────┐
+│                       MODEL LAYER                               │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │ User Model   │  │ Psikolog     │  │ Schedule     │          │
+│  │              │  │ Model        │  │ Model        │          │
+│  │ - Table:     │  │              │  │              │          │
+│  │   users      │  │ - Table:     │  │ - Table:     │          │
+│  │              │  │   psikologs  │  │   schedules  │          │
+│  └──────────────┘  └──────────────┘  └──────────────┘          │
+│                                                                 │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │ Booking      │  │ Payment      │  │ Consultation │          │
+│  │ Model        │  │ Model        │  │ Model        │          │
+│  │              │  │              │  │              │          │
+│  │ - Table:     │  │ - Table:     │  │ - Table:     │          │
+│  │   bookings   │  │   payments   │  │ consultations│          │
+│  └──────────────┘  └──────────────┘  └──────────────┘          │
+│                                                                 │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │ Feedback     │  │ ForumTopic   │  │ ForumPost    │          │
+│  │ Model        │  │ Model        │  │ Model        │          │
+│  │              │  │              │  │              │          │
+│  │ - Table:     │  │ - Table:     │  │ - Table:     │          │
+│  │   feedbacks  │  │   forum_     │  │   forum_     │          │
+│  │              │  │   topics     │  │   posts      │          │
+│  └──────────────┘  └──────────────┘  └──────────────┘          │
+│                                                                 │
+│  ┌──────────────────────────────────────────────┐              │
+│  │ Article, ForumComment, ChatMessage, Report   │              │
+│  │ Models (Database Tables)                     │              │
+│  └──────────────────────────────────────────────┘              │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+                              ↓
+┌────────────────────────────────────────────────────────────────┐
+│                     DATABASE LAYER (MySQL)                      │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ kutkatha Database                                       │   │
+│  │ - 13 Tabel Relasional                                  │   │
+│  │ - Foreign Key Constraints                              │   │
+│  │ - Indexed untuk Performance                            │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│                   AUXILIARY COMPONENTS                          │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Middleware:                                                   │
+│  - Auth Middleware (Authentikasi)                              │
+│  - Role Middleware (Otorisasi berbasis Role)                   │
+│  - TrustProxies, ThrottleRequests, dll                         │
+│                                                                 │
+│  Services & Business Logic:                                    │
+│  - PaymentService (Proses Pembayaran)                          │
+│  - NotificationService (Email/SMS)                             │
+│  - ReportService (Generate Laporan)                            │
+│                                                                 │
+│  Helpers & Utilities:                                          │
+│  - Helper Functions                                            │
+│  - Validation Rules                                            │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+
+
+================================================================================
+3. CLASS DIAGRAM
+================================================================================
+
+USER MANAGEMENT
+================================================================================
+
+User Model
+──────────
+
+- id: bigint
+- name: string
+- email: string (unique)
+- password: string
+- role: enum (user|psikolog|admin|pemerintah)
+- phone: string
+- address: text
+- photo: string
+- is_active: boolean
+- created_at: timestamp
+- updated_at: timestamp
+
+Methods:
++ isUser(): bool
++ isPsikolog(): bool
++ isAdmin(): bool
++ isPemerintah(): bool
++ getPhotoUrl(): string
++ psikolog() → Psikolog
++ bookings() → Booking[]
++ forums() → ForumTopic[]
++ articles() → Article[]
+
+Extends: Authenticatable
+
+
+KONSULTASI MANAGEMENT
+================================================================================
+
+Psikolog Model
+──────────────
+
+- id: bigint
+- user_id: FK→User
+- str_number: string
+- specialization: string
+- bio: text
+- education: text
+- certifications: text
+- experience_years: int
+- consultation_fee: decimal
+- verification_status: enum(pending|verified|rejected)
+- verified_at: timestamp
+- average_rating: decimal
+- total_reviews: int
+- created_at: timestamp
+
+Methods:
++ isVerified(): bool
++ isPending(): bool
++ getAverageRating()
++ user() → User
++ schedules() → Schedule[]
+
+Relationships:
+- 1:1 dengan User
+- 1:N dengan Schedule
+
+
+Schedule Model
+──────────────
+
+- id: bigint
+- psikolog_id: FK→Psikolog
+- date: date
+- start_time: time
+- end_time: time
+- consultation_type: enum(online|offline|chat)
+- is_available: bool
+- location: string
+- created_at: timestamp
+- updated_at: timestamp
+
+Methods:
++ getFormattedTime()
++ getTypeLabel()
++ isBooked(): bool
++ psikolog() → Psikolog
++ bookings() → Booking[]
+
+Relationships:
+- 1:N dengan Booking
+
+
+Booking Model
+─────────────
+
+- id: bigint
+- user_id: FK→User
+- schedule_id: FK→Schedule
+- booking_code: string
+- status: enum(pending|confirmed|completed|cancelled|rescheduled)
+- complaint: text
+- notes: text
+- confirmed_at: timestamp
+- cancelled_at: timestamp
+- cancel_reason: text
+- created_at: timestamp
+
+Methods:
++ getStatusBadge(): HTML
++ isPaid(): bool
++ canBeCancelled(): bool
++ user() → User
++ schedule() → Schedule
++ payment() → Payment
++ consultation() → Consultation
+
+Relationships:
+- 1:1 dengan Payment
+- 1:1 dengan Consultation
+
+
+Payment Model
+─────────────
+
+- id: bigint
+- booking_id: FK→Booking
+- payment_code: string
+- amount: decimal
+- payment_method: enum(transfer|ewallet|cash)
+- status: enum(pending|paid|failed|refunded)
+- proof_of_payment: string
+- paid_at: timestamp
+- created_at: timestamp
+
+Methods:
++ getStatusBadge()
++ getFormattedAmount()
++ getMethodName()
++ booking() → Booking
+
+Relationships:
+- 1:1 dengan Booking
+
+
+Consultation Model
+──────────────────
+
+- id: bigint
+- booking_id: FK→Booking
+- summary: text
+- diagnosis: text
+- recommendation: text
+- follow_up_notes: text
+- next_session_date: date
+- status: enum(ongoing|completed)
+- started_at: timestamp
+- ended_at: timestamp
+- created_at: timestamp
+
+Methods:
++ isCompleted(): bool
++ getDuration(): string
++ booking() → Booking
++ feedback() → Feedback
++ chatMessages() → ChatMessage[]
+
+Relationships:
+- 1:1 dengan Booking
+
+
+Feedback Model
+──────────────
+
+- id: bigint
+- consultation_id: FK
+- user_id: FK→User
+- rating: int (1-5)
+- comment: text
+- is_anonymous: boolean
+- created_at: timestamp
+
+Methods:
++ getStarsHtml(): HTML
++ consultation() → Consultation
++ user() → User
+
+
+ChatMessage Model
+─────────────────
+
+- id: bigint
+- consultation_id: FK
+- sender_id: FK→User
+- message: text
+- attachment: string
+- is_read: boolean
+- read_at: timestamp
+- created_at: timestamp
+
+Methods:
++ markAsRead()
++ getAttachmentUrl()
++ consultation() → Consultation
++ sender() → User
+
+
+FORUM MANAGEMENT
+================================================================================
+
+ForumTopic Model
+────────────────
+
+- id: bigint
+- user_id: FK→User
+- title: string
+- slug: string (unique)
+- category: string
+- description: text
+- is_anonymous: boolean
+- is_pinned: boolean
+- is_closed: boolean
+- views_count: int
+- created_at: timestamp
+
+Methods:
++ getPostsCount(): int
++ getAuthorName(): string
++ user() → User
++ posts() → ForumPost[]
+
+Relationships:
+- 1:N dengan ForumPost
+
+
+ForumPost Model
+───────────────
+
+- id: bigint
+- topic_id: FK→Topic
+- user_id: FK→User
+- content: text
+- is_anonymous: bool
+- is_best_answer: bool
+- created_at: timestamp
+- updated_at: timestamp
+
+Methods:
++ getAuthorName()
++ incrementViews()
++ topic() → ForumTopic
++ user() → User
++ comments() → ForumComment[]
+
+Relationships:
+- 1:N dengan ForumComment
+
+
+ForumComment Model
+──────────────────
+
+- id: bigint
+- post_id: FK→ForumPost
+- user_id: FK→User
+- parent_id: FK (nullable)
+- content: text
+- is_anonymous: boolean
+- is_psikolog_answer: bool
+- created_at: timestamp
+
+Methods:
++ getAuthorName(): string
++ post() → ForumPost
++ user() → User
++ parent() → ForumComment
++ replies() → ForumComment[]
+
+
+CONTENT MANAGEMENT
+================================================================================
+
+Article Model
+──────────────
+
+- id: bigint
+- author_id: FK→User
+- title: string
+- slug: string (unique)
+- excerpt: text
+- content: longtext
+- featured_image: string
+- category: string
+- status: enum(draft|published)
+- views_count: int
+- published_at: timestamp
+- created_at: timestamp
+
+Methods:
++ getImageUrl(): string
++ incrementViews()
++ publish()
++ author() → User
++ scopePublished()
+
+
+Report Model
+────────────
+
+- id: bigint
+- created_by: FK→User
+- title: string
+- report_type: string (monthly|quarterly|annual)
+- period_start: date
+- period_end: date
+- total_consultations: int
+- total_users: int
+- total_psikologs: int
+- statistics: json
+- summary: text
+- status: enum(draft|sent)
+- sent_at: timestamp
+- created_at: timestamp
+
+Methods:
++ getTypeLabel()
++ isSent(): bool
++ creator() → User
+
+
+================================================================================
+4. ROLE & PERMISSION MATRIX
+================================================================================
+
+ROLE-BASED ACCESS CONTROL (RBAC)
+
+USER (Pengguna Biasa)
+─────────────────────
+
+Fitur yang Dapat Diakses:
+✓ View Daftar Psikolog
+✓ Filter Psikolog berdasarkan Spesialisasi, Rating
+✓ Booking Konsultasi
+✓ Proses Pembayaran
+✓ View History Booking & Konsultasi
+✓ Memberikan Feedback/Rating
+✓ Chat dengan Psikolog saat Konsultasi
+✓ View Artikel Edukatif
+✓ Post di Forum (Topik/Komentar)
+✓ View Profile Pribadi
+✓ Edit Profile Pribadi
+
+Fitur yang TIDAK Dapat Diakses:
+✗ Approve/Reject Psikolog
+✗ Buat Artikel
+✗ Lihat Laporan
+✗ Admin Dashboard
+
+
+PSIKOLOG (Professional)
+───────────────────────
+
+Fitur yang Dapat Diakses:
+✓ View Profile Pribadi (dengan STR, Sertifikasi)
+✓ Edit Profile & Jadwal Konsultasi
+✓ View Booking Pending
+✓ Konfirmasi/Reject Booking
+✓ Chat dengan User saat Konsultasi
+✓ Input Catatan Konsultasi (Diagnosis, Rekomendasi)
+✓ View Feedback dari User
+✓ Post Komentar di Forum (sebagai Expert)
+✓ Lihat Statistik Konsultasi Pribadi
+✓ Lihat Rating & Review
+
+Fitur yang TIDAK Dapat Diakses:
+✗ Approve/Reject Psikolog Lain
+✗ Lihat Data User Lain
+✗ Buat Laporan
+✗ Admin Dashboard
+
+
+ADMIN (Administrator)
+─────────────────────
+
+Fitur yang Dapat Diakses:
+✓ Dashboard Admin (Statistik Sistem)
+✓ View Pending Psikolog Applications
+✓ Review & Approve Psikolog
+✓ Reject Psikolog (dengan Alasan)
+✓ View All Users
+✓ Suspend/Activate User
+✓ Manage Forum (Edit/Delete Topik & Postingan Jika Melanggar)
+✓ Moderate Konten (Forum, Artikel Tidak Sesuai)
+✓ View System Logs
+✓ Generate Statistik
+
+Fitur yang TIDAK Dapat Diakses:
+✗ Buat Laporan ke Pemerintah (hanya Pemerintah)
+✗ Chat dengan User
+✗ Booking Konsultasi
+
+
+PEMERINTAH (Government Official)
+─────────────────────────────────
+
+Fitur yang Dapat Diakses:
+✓ Dashboard Pemerintah
+✓ View Statistik Konsultasi (Periode Tertentu)
+✓ Generate Laporan (Monthly, Quarterly, Annual)
+✓ Export Laporan (PDF, Excel)
+✓ View Demografi User & Psikolog
+✓ View Trending Topics di Forum
+✓ Download Data Statistik
+
+Fitur yang TIDAK Dapat Diakses:
+✗ Approve Psikolog
+✗ Lihat Data Detail User Individual
+✗ Chat
+✗ Booking Konsultasi
+✗ Admin Dashboard
+
+
+================================================================================
+5. FILE STRUCTURE
+================================================================================
+
+kutkatha/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── AuthController.php
+│   │   │   ├── UserController.php
+│   │   │   ├── PsikologController.php
+│   │   │   ├── BookingController.php
+│   │   │   ├── PaymentController.php
+│   │   │   ├── ConsultationController.php
+│   │   │   ├── FeedbackController.php
+│   │   │   ├── ForumController.php
+│   │   │   ├── ArticleController.php
+│   │   │   ├── ReportController.php
+│   │   │   ├── ChatController.php
+│   │   │   ├── AdminController.php
+│   │   │   └── DashboardController.php
+│   │   └── Middleware/
+│   │       ├── Authenticate.php
+│   │       ├── RoleMiddleware.php
+│   │       └── AuthenticateSession.php
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Psikolog.php
+│   │   ├── Schedule.php
+│   │   ├── Booking.php
+│   │   ├── Payment.php
+│   │   ├── Consultation.php
+│   │   ├── Feedback.php
+│   │   ├── ForumTopic.php
+│   │   ├── ForumPost.php
+│   │   ├── ForumComment.php
+│   │   ├── Article.php
+│   │   ├── Report.php
+│   │   └── ChatMessage.php
+│   ├── Providers/
+│   │   └── AppServiceProvider.php
+│   └── Services/
+│       ├── PaymentService.php
+│       ├── NotificationService.php
+│       └── ReportService.php
+├── database/
+│   ├── migrations/
+│   │   └── [15 migration files]
+│   └── seeders/
+│       └── DatabaseSeeder.php
+├── resources/
+│   ├── views/
+│   │   ├── welcome.blade.php
+│   │   ├── dashboard.blade.php
+│   │   ├── auth/
+│   │   ├── user/
+│   │   ├── psikolog/
+│   │   ├── admin/
+│   │   ├── pemerintah/
+│   │   ├── forum/
+│   │   ├── booking/
+│   │   └── components/
+│   ├── css/
+│   │   └── app.css
+│   └── js/
+│       ├── app.js
+│       └── bootstrap.js
+├── routes/
+│   └── web.php
+├── public/
+│   ├── index.php
+│   └── [assets]
+├── config/
+│   ├── app.php
+│   ├── auth.php
+│   ├── database.php
+│   └── [other config]
+└── storage/
+    ├── app/
+    ├── framework/
+    └── logs/
+
+
+================================================================================
+KESIMPULAN
+================================================================================
+
+Kutkatha adalah platform full-stack Laravel yang mengimplementasikan:
+
+1. MVC Architecture
+   - Pemisahan concerns antara View, Controller, dan Model
+
+2. Role-Based Access Control
+   - 4 role berbeda dengan permission yang spesifik
+
+3. RESTful API Pattern
+   - Melalui routing yang jelas
+
+4. Database Normalization
+   - 13 tabel dengan relasi yang tepat
+
+5. Activity Flows
+   - Proses bisnis yang terdokumentasi dengan baik
+
+6. Security Best Practices
+   - Authentication, Authorization, Input Validation
+
+Sistem ini siap untuk production dengan proper structure, scalability, dan maintainability.
+
+================================================================================
